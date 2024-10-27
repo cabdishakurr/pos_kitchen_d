@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="pos_kitchen_d.KitchenD" owl="1">
+        <div class="kitchen-d-container">
+            <div class="kitchen-d-header">
+                <h1>Kitchen D</h1>
+                <div class="kitchen-d-filters">
+                    <button t-on-click="() => this.setFilter('all')" t-att-class="{'active': state.filter === 'all'}">All</button>
+                    <button t-on-click="() => this.setFilter('to_cook')" t-att-class="{'active': state.filter === 'to_cook'}">
+                        To cook <span class="badge" t-esc="orderCounts.to_cook"/>
+                    </button>
+                    <button t-on-click="() => this.setFilter('ready')" t-att-class="{'active': state.filter === 'ready'}">
+                        Ready <span class="badge" t-esc="orderCounts.ready"/>
+                    </button>
+                    <button t-on-click="() => this.setFilter('completed')" t-att-class="{'active': state.filter === 'completed'}">
+                        Completed <span class="badge" t-esc="orderCounts.completed"/>
+                    </button>
+                </div>
+            </div>
+            <div class="kitchen-d-orders">
+                <t t-foreach="filteredOrders" t-as="order" t-key="order.id">
+                    <div class="kitchen-d-order">
+                        <div class="kitchen-d-order-header">
+                            <span class="kitchen-d-order-name" t-esc="order.name"/>
+                            <span class="kitchen-d-order-state" t-esc="order.state"/>
+                        </div>
+                        <div class="kitchen-d-order-details">
+                            <div class="kitchen-d-order-customer" t-esc="order.customer_name"/>
+                            <div class="kitchen-d-order-time" t-esc="order.order_time"/>
+                        </div>
+                        <div class="kitchen-d-order-lines">
+                            <t t-foreach="order.order_line_ids" t-as="line" t-key="line.id">
+                                <div class="kitchen-d-order-line">
+                                    <span class="kitchen-d-order-line-qty" t-esc="line.quantity"/>
+                                    <span class="kitchen-d-order-line-product" t-esc="line.product_id[1]"/>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="kitchen-d-order-actions">
+                            <button t-if="order.state === 'to_cook'" t-on-click="() => this.updateOrderState(order.id, 'ready')">
+                                Mark as Ready
+                            </button>
+                            <button t-if="order.state === 'ready'" t-on-click="() => this.updateOrderState(order.id, 'completed')">
+                                Mark as Completed
+                            </button>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

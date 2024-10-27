@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pos_kitchen_d" model="ir.ui.view">
+        <field name="name">pos.kitchen.d</field>
+        <field name="model">pos.kitchen.d.order</field>
+        <field name="arch" type="xml">
+            <form js_class="kitchen_d">
+                <div class="o_kitchen_d"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pos_kitchen_d" model="ir.actions.act_window">
+        <field name="name">Kitchen D</field>
+        <field name="res_model">pos.kitchen.d.order</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_pos_kitchen_d"/>
+        <field name="target">fullscreen</field>
+    </record>
+
+    <menuitem id="menu_pos_kitchen_d"
+              name="Kitchen D"
+              action="action_pos_kitchen_d"
+              parent="point_of_sale.menu_point_root"
+              sequence="20"/>
+</odoo>
